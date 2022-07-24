@@ -1,0 +1,31 @@
+- name: Install git-related software
+  tags: cli
+  apt:
+    name: "{{ packages }}"
+    state: latest
+  vars:
+    packages:
+      - git
+
+- name: Install GitHub cli - Update apt cache
+  tags: cli
+  ansible.builtin.apt:
+    state: latest
+    update_cache: true
+- name: Install GitHub cli - Add Apt signing key
+  tags: cli
+  ansible.builtin.apt_key:
+    url: "https://cli.github.com/packages/githubcli-archive-keyring.gpg"
+    state: present
+- name: Install GitHub cli - Add repository into sources list
+  tags: cli
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://cli.github.com/packages stable main
+    state: present
+    filename: github-cli
+- name: Install GitHub cli - Install gh package
+  tags: cli
+  ansible.builtin.apt:
+    name: "gh"
+    state: latest
+    update_cache: true

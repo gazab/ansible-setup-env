@@ -1,0 +1,16 @@
+- name: ensure fonts directory
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.fonts"
+    state: directory
+
+- name: JetBrains Mono exists
+  shell: "ls {{ lookup('env', 'HOME') }}/.fonts/fonts/ttf/JetBrains*Mono*"
+  register: jetbrains_mono_exits
+  ignore_errors: true
+
+- name: Download JetBrains Mono
+  when: jetbrains_mono_exits is failed
+  ansible.builtin.unarchive:
+    src: https://download.jetbrains.com/fonts/JetBrainsMono-2.242.zip
+    dest: "{{ lookup('env', 'HOME') }}/.fonts/"
+    remote_src: yes

@@ -1,0 +1,24 @@
+- name: Set login shell of user {{ ansible_env.USER }} to `/usr/bin/fish` with `usermod`
+  tags: cli
+  ansible.builtin.command: usermod --shell /usr/bin/fish {{ ansible_env.USER }}
+  become: true
+  changed_when: false
+
+- name: get oh-my-fish repo
+  tags: cli
+  git:
+    repo: "https://github.com/oh-my-fish/oh-my-fish.git"
+    dest: ~/.local/share/git/oh-my-fish
+
+- name: install oh-my-fish
+  tags: cli
+  shell:
+    cmd: "bin/install --offline --noninteractive --yes"
+    executable: /usr/bin/fish
+    chdir: ~/.local/share/git/oh-my-fish
+
+- name: Install kitty terminal emulator
+  become: true
+  apt:
+    name: kitty
+    state: latest

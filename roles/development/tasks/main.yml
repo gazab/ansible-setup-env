@@ -1,0 +1,29 @@
+- name: Install VS Code
+  snap:
+    name: code
+    classic: yes
+
+- name: Install Postman
+  snap:
+    name: postman
+    channel: latest
+
+- name: Install the gpg key for nodejs LTS
+  apt_key:
+    url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+    state: present
+
+- name: Install the nodejs LTS repos
+  vars:
+    NODEJS_VERSION: "16"
+    ansible_distribution_release: "jammy" #trusty
+
+  apt_repository:
+    repo: "deb https://deb.nodesource.com/node_{{ NODEJS_VERSION }}.x {{ ansible_distribution_release }} main"
+    state: present
+    update_cache: yes
+
+- name: Install nodejs
+  apt:
+    name: nodejs
+    state: latest

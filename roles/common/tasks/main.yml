@@ -1,0 +1,70 @@
+- name: Print out the hostname of target
+  tags: cli
+  command: hostname
+
+- name: Install a list of packages to their latest version
+  tags: cli
+  apt:
+    name: "{{ packages }}"
+    state: latest
+  vars:
+    packages:
+      - curl
+      - grep
+      - htop
+      - jq
+      - less
+      - tldr
+      - tree
+
+- name: Install Open SSL
+  tags: security
+  apt:
+    pkg: libssl-dev
+    state: latest
+
+# Install chrome
+- name: Install apt-transport-https
+  ansible.builtin.apt:
+    state: latest
+    update_cache: true
+- name: Add Apt signing key
+  ansible.builtin.apt_key:
+    url: "https://dl.google.com/linux/linux_signing_key.pub"
+    state: present
+- name: Add repository into sources list
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+    state: present
+    filename: google-chrome
+- name: Install google-chrome-stable
+  ansible.builtin.apt:
+    name: "google-chrome-stable"
+    state: latest
+    update_cache: true
+
+- name: Install Firefox Nightly
+  tags: browser
+  apt:
+    pkg: firefox
+    state: latest
+
+- name: Install ncdu (NCurses Disk Usage, replacement for du)
+  tags: cli
+  snap:
+    name: ncdu
+
+- name: Upgrade installed packages
+  tags: cli
+  apt:
+    upgrade: yes
+
+- name: Remove useless packages from the cache
+  tags: cli
+  apt:
+    autoclean: yes
+
+- name: Remove dependencies that are no longer required
+  tags: cli
+  apt:
+    autoremove: yes
