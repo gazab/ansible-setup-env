@@ -51,8 +51,9 @@
 
 - name: Install ncdu (NCurses Disk Usage, replacement for du)
   tags: cli
-  snap:
-    name: ncdu
+  apt:
+    pkg: ncdu
+    state: present
 
 - name: Upgrade installed packages
   tags: cli

@@ -9,11 +9,13 @@
     channel: latest
 
 - name: Install the gpg key for nodejs LTS
+  tags: cli
   apt_key:
     url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
     state: present
 
 - name: Install the nodejs LTS repos
+  tags: cli
   vars:
     NODEJS_VERSION: "16"
     ansible_distribution_release: "jammy" #trusty
@@ -24,6 +26,7 @@
     update_cache: yes
 
 - name: Install nodejs
+  tags: cli
   apt:
     name: nodejs
     state: latest
