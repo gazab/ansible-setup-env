@@ -4,30 +4,30 @@
   vars:
     home_dir: "{{ lookup('env', 'HOME') }}"
   roles:
-    # - { role: git, become: yes, tags: ["git"] }
-    # - { role: dotstrap.fish, become: yes, tags: ["cli"] }
-    # - { role: terminal }
+    - { role: git, become: yes, tags: ["git"] }
+    - { role: dotstrap.fish, become: yes, tags: ["cli"] }
+    - { role: terminal }
     - { role: andrewrothstein.starship, tags: ["cli"] }
-    # - {
-    #     role: hussainweb.chezmoi,
-    #     become: yes,
-    #     chezmoi_init_url: "gazab",
-    #     tags: ["cli"],
-    #   }
-    # - role: drew-kun.nerdfonts
-    #   vars:
-    #     - nerdfonts_fonts:
-    #         - fontname: "JetBrainsMono"
-    #           name: "font-jetbrains-mono"
-    #         - fontname: "Terminus"
-    #           name: "font-terminess-ttf-nerd-font"
-    #         - fontname: "NerdFontsSymbolsOnly"
-    # - { role: fonts, become: yes, tags: ["fonts"] }
-    # - { role: common, become: yes }
-    # - { role: communication, become: yes }
-    # - { role: development, become: yes }
-    # - { role: multimedia, become: yes }
-    # - { role: python, become: yes }
+    - {
+        role: hussainweb.chezmoi,
+        become: yes,
+        chezmoi_init_url: "gazab",
+        tags: ["cli"],
+      }
+    - role: drew-kun.nerdfonts
+      vars:
+        - nerdfonts_fonts:
+            - fontname: "JetBrainsMono"
+              name: "font-jetbrains-mono"
+            - fontname: "Terminus"
+              name: "font-terminess-ttf-nerd-font"
+            - fontname: "NerdFontsSymbolsOnly"
+    - { role: fonts, become: yes, tags: ["fonts"] }
+    - { role: common, become: yes }
+    - { role: communication, become: yes }
+    - { role: development, become: yes }
+    - { role: multimedia, become: yes }
+    - { role: python, become: yes }
     - { role: kubernetes, become: yes }
   tasks:
     - debug: msg="You are the user {{ lookup('env','USER') }}"
