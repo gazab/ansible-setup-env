@@ -5,5 +5,5 @@ sudo apt-get install git -y
 
 sudo apt-get install pipx -y
 
-sudo apt-get install ansible -y
+python3 -m pip install --user ansible
 ansible-galaxy install -r requirements.yml
