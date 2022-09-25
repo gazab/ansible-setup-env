@@ -5,14 +5,14 @@
     home_dir: "{{ lookup('env', 'HOME') }}"
   roles:
     - { role: git, become: yes, tags: ["git"] }
-    - { role: dotstrap.fish, become: yes, tags: ["cli"] }
-    - { role: terminal }
-    - { role: andrewrothstein.starship, tags: ["cli"] }
+    - { role: dotstrap.fish, become: yes, tags: ["cli", "fish"] }
+    - { role: terminal, tags: ["terminal"] }
+    - { role: andrewrothstein.starship, tags: ["cli", "starship"] }
     - {
         role: hussainweb.chezmoi,
         become: yes,
         chezmoi_init_url: "gazab",
-        tags: ["cli"],
+        tags: ["cli", "chezmoi"],
       }
     - role: drew-kun.nerdfonts
       vars:
@@ -22,12 +22,15 @@
             - fontname: "Terminus"
               name: "font-terminess-ttf-nerd-font"
             - fontname: "NerdFontsSymbolsOnly"
+      tags:
+        - "fonts"
     - { role: fonts, become: yes, tags: ["fonts"] }
-    - { role: common, become: yes }
-    - { role: communication, become: yes }
-    - { role: development, become: yes }
-    - { role: multimedia, become: yes }
-    - { role: python, become: yes }
-    - { role: kubernetes, become: yes }
+    - { role: common, become: yes, tags: ["common"] }
+    - { role: communication, become: yes, tags: ["communication"] }
+    - { role: development, become: yes, tags: ["development"] }
+    - { role: multimedia, become: yes, tags: ["multimedia"] }
+    - { role: python, become: yes, tags: ["python"] }
+    - { role: kubernetes, become: yes, tags: ["kubernetes"] }
+    - { role: tools, become: yes, tags: ["tools"] }
   tasks:
     - debug: msg="You are the user {{ lookup('env','USER') }}"

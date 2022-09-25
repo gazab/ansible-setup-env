@@ -1,0 +1,4 @@
+- name: Install bitwarden cli
+  community.general.npm:
+    name: "@bitwarden/cli"
+    global: true
