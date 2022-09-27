@@ -49,11 +49,6 @@
     pkg: firefox
     state: latest
 
-- name: Install Bitwarden cli
-  tags: cli
-  snap:
-    name: bw
-
 - name: Install ncdu (NCurses Disk Usage, replacement for du)
   tags: cli
   apt:

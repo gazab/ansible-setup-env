@@ -1,0 +1,17 @@
+- name: Install Terraform - Add Apt signing key
+  tags: cli
+  ansible.builtin.apt_key:
+    url: "https://apt.releases.hashicorp.com/gpg"
+    state: present
+- name: Install Terraform - Add repository into sources list
+  tags: cli
+  ansible.builtin.apt_repository:
+    repo: deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com jammy main
+    state: present
+    filename: hashicorp
+- name: Install Terraform - Install terraform package
+  tags: cli
+  ansible.builtin.apt:
+    name: "terraform"
+    state: latest
+    update_cache: true

@@ -31,6 +31,7 @@
     - { role: multimedia, become: yes, tags: ["multimedia"] }
     - { role: python, become: yes, tags: ["python"] }
     - { role: kubernetes, become: yes, tags: ["kubernetes"] }
+    - { role: terraform, become: yes, tags: ["terraform"] }
     - { role: tools, become: yes, tags: ["tools"] }
   tasks:
     - debug: msg="You are the user {{ lookup('env','USER') }}"
