@@ -12,3 +12,7 @@
   apt:
     pkg: python-is-python3
     state: latest
+
+- name: Install github3.py
+  ansible.builtin.pip:
+    name: github3.py

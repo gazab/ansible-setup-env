@@ -5,8 +5,7 @@
     home_dir: "{{ lookup('env', 'HOME') }}"
   roles:
     - { role: git, become: yes, tags: ["git"] }
-    - { role: dotstrap.fish, become: yes, tags: ["cli", "fish"] }
-    - { role: terminal, tags: ["terminal"] }
+    - { role: terminal, become: yes, tags: ["terminal"] }
     - { role: andrewrothstein.starship, tags: ["cli", "starship"] }
     - {
         role: hussainweb.chezmoi,
@@ -30,7 +29,7 @@
     - { role: development, become: yes, tags: ["development"] }
     - { role: multimedia, become: yes, tags: ["multimedia"] }
     - { role: python, become: yes, tags: ["python"] }
-    - { role: kubernetes, become: yes, tags: ["kubernetes"] }
+    - { role: kubernetes, become: yes, tags: ["kubernetes", "cli"] }
     - { role: terraform, become: yes, tags: ["terraform"] }
     - { role: tools, become: yes, tags: ["tools"] }
   tasks:

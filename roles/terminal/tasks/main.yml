@@ -1,3 +1,15 @@
+# TODO: Fix proxy problems
+# - name: Add fish repository from PPA
+#   become: true
+#   ansible.builtin.apt_repository:
+#     repo: ppa:fish-shell/release-3
+
+- name: Install fish
+  ansible.builtin.apt:
+    name: "fish"
+    state: latest
+    update_cache: true
+
 - name: Set login shell of user {{ ansible_env.USER }} to `/usr/bin/fish` with `usermod`
   tags: cli
   ansible.builtin.command: usermod --shell /usr/bin/fish {{ ansible_env.USER }}

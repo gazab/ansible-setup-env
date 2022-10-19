@@ -1,21 +1,46 @@
 - name: installing podman
-  tags: cli
-  package:
+  ansible.builtin.apt:
     name: "podman"
     state: present
 
-- name: kubectl - Add Apt signing key
-  ansible.builtin.apt_key:
+- name: Add Google's apt repository key.
+  ansible.builtin.get_url:
     url: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+    dest: /etc/apt/trusted.gpg.d/google.asc
+    mode: "0644"
+    force: true
 
-    state: present
 - name: kubectl - Add repository into sources list
   ansible.builtin.apt_repository:
     repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
     state: present
     filename: kubernetes
+
 - name: Install kubectl
   ansible.builtin.apt:
     name: "kubectl"
     state: present
     update_cache: true
+
+- name: Get kubeswitch latest tag
+  github_release:
+    user: danielfoehrKn
+    repo: kubeswitch
+    action: latest_release
+  register: kubeswitch_latest
+
+- name: Grab kubeswitch latest binaries
+  ansible.builtin.get_url:
+    url: "https://github.com/danielfoehrKn/kubeswitch/releases/download/{{ kubeswitch_latest['tag'] }}/switcher_linux_amd64"
+    dest: /usr/local/bin/switcher
+
+- name: Changing perm of "/usr/local/bin/switcher", adding "+x"
+  file: dest=/usr/local/bin/switcher mode=a+x
+
+- name: Grab kubeswitch latest binaries
+  ansible.builtin.get_url:
+    url: "https://github.com/danielfoehrKn/kubeswitch/releases/download/{{ kubeswitch_latest['tag'] }}/switch.sh"
+    dest: /usr/local/bin/ks.sh
+
+- name: Changing perm of "/usr/local/bin/ks.sh", adding "+x"
+  file: dest=/usr/local/bin/ks.sh mode=a+x
